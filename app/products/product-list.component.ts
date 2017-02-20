@@ -13,18 +13,20 @@ export class ProductListComponent implements OnInit   {
     imageWith: number = 50;
     imageMargin: number = 2;
     showImage: boolean = false;
-    listFilter: string = 'cart';
+    listFilter: string;
+    errorMessage: string;
     products: IProduct[] ;
     constructor(private _productService: ProductService){
-       
     }
 
     toggleImage(): void { 
-        this.showImage = !this.showImage;
+        this.showImage = !this.showImage; 
     }
 
     ngOnInit(): void {
-         this.products = this._productService.getProducts();
+        this._productService.getProducts()
+         .subscribe(products =>this.products = products, 
+                    error=> this.errorMessage = <any>error) ;
     }
 
     onRatingCicked(message: string):void{
