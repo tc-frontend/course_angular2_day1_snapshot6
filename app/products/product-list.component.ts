@@ -24,9 +24,18 @@ export class ProductListComponent implements OnInit   {
     }
 
     ngOnInit(): void {
-        this._productService.getProducts()
+
+        //Observable
+        /*this._productService.getProducts()
          .subscribe(products =>this.products = products, 
-                    error=> this.errorMessage = <any>error) ;
+                    error=> this.errorMessage = <any>error) ;*/
+
+        //Promises
+        this._productService.getProductsPromise()
+            .then(products =>this.products = products)
+            .catch(error=> this.errorMessage = <any>error);
+
+        
     }
 
     onRatingCicked(message: string):void{

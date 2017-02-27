@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/do'
 import 'rxjs/add/operator/catch'
+import 'rxjs/add/operator/toPromise'
 
 @Injectable()
 export class ProductService{
@@ -19,6 +20,14 @@ export class ProductService{
             .map((response: Response)=> <IProduct[]>response.json())
             .do(data=> console.log('All' + JSON.stringify(data)))
             .catch(this.handleError);
+    }
+
+    getProductsPromise(): Promise<IProduct[]> {
+
+        return this._http.get(this._productUrl)
+                  .toPromise()
+                  .then(response => <IProduct[]>response.json())
+                  .catch(this.handleError);
     }
 
     private handleError(error: Response){
